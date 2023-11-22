@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en" class="h-full bg-white">
+  <head>
+    {% csrf_meta_tags %}
+    <title>
+      {% if page_title %}
+        {{ page_title }}
+      {% else %}
+        {{ current_site.title }}
+      {% endif %}
+    </title>
+    <meta charset="utf-8"/>
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    {% if page_description %}
+      <meta name="description" content="{{ page_description | escape }}"/>
+    {% endif %}
+    {% include "social_meta_tags" %}
+    <link href="{{ settings.favicon }}?v=2" rel="shortcut icon"/>
+    <link rel="canonical" href="{{ canonical_url }}"/>
+
+    <!-- {{ 'core.css' | kajabi_asset_url | stylesheet_tag }} -->
+    {{ 'reset.css' | asset_url | stylesheet_tag }}
+
+    <link rel='stylesheet' type='text/css' href='https://fonts.sanctuary.computer/ITCGaramond/styles.css'>
+    <link rel='stylesheet' type='text/css' href='https://fonts.sanctuary.computer/ABCDiatype/styles.css'>
+    <link rel='stylesheet' type='text/css' href='https://fonts.sanctuary.computer/Input/styles.css'>
+    <link rel='stylesheet' type='text/css' href='https://fonts.sanctuary.computer/IndexLogotype/styles.css'>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+      .logo {
+        font-family: 'Index Logotype', serif;
+      }
+      .serif {
+        font-family: 'ITC Garamond Std Lt Cond', serif;
+      }
+      .sans-serif {
+        font-family: 'ABC Diatype Light', sans-serif;
+      }
+      .post-body p {
+        font-family: 'ABC Diatype Light', sans-serif;
+      }
+      .post-body p a {
+        display: inline-block;
+        padding-top: 0.25rem;
+        border-bottom: 1px dashed black;
+      }
+    </style>
+
+    {% content_for_header %}
+  </head>
+  
+  <body class="h-full">
+    <nav class="bg-black border border-solid border-b-white px-4 py-2">
+      <span class="text-white logo text-4xl">Index</span>
+    </nav>
+
+    {% assign btnText = "Start Course"  %}
+    {% assign btnAction = current_product.completion.next_post.url %}
+    {% if current_product.completion.percent == 0 %}
+      {% assign btnText = "Start Course"  %}
+    {% elsif current_product.completion.percent == 100 %}
+      {% assign btnText  = "Start Again"  %}
+      {% assign btnAction = current_product.categories.first.posts.first.url %}
+    {% else %}
+      {% assign btnText = "Resume Course" %}
+    {% endif %}
+
+    <header class="bg-black px-4 py-12 border border-solid border-b-white">
+      <p class="text-white text-5xl md:text-7xl serif pb-1">{{ current_product.title }}</p>
+      <p class="text-white sans-serif pb-4 max-w-xl">{{ current_product.description }}</p>
+      <a href="{{ btnAction }}" class="bg-white text-black sans-serif text-2xl uppercase rounded px-2 py-1" id="">{{ btnText }}</a>
+    </header>
+
+    {{ content_for_layout }}
+
+    {{ 'core.js' | kajabi_asset_url | script_tag }}
+  </body>
+</html>
