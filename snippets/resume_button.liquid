@@ -1,0 +1,12 @@
+{% assign btnText = "Start Course"  %}
+{% assign btnAction = current_product.completion.next_post.url %}
+{% if current_product.completion.percent == 0 %}
+  {% assign btnText = "Start Course"  %}
+{% elsif current_product.completion.percent == 100 %}
+  {% assign btnText  = "Start Again"  %}
+  {% assign btnAction = current_product.categories.first.posts.first.url %}
+{% else %}
+  {% assign btnText = "Resume Course" %}
+{% endif %}
+<a href="{{ btnAction }}" class="bg-white text-black sans-serif text-2xl uppercase rounded px-2 py-1" id="">{{ btnText }}
+</a>

@@ -3,9 +3,9 @@
     {% include "syllabus" %}
   </div>
 
-  <main class="w-full">
-    <h2 class="text-white sans-serif uppercase pb-2 text-xs">{{ post.title }}</h2>
-    <h1 class="text-white text-5xl serif pb-4">{{ post.category.title }}</h1>
+  <main class="w-full text-white">
+    <h2 class="sans-serif uppercase pb-2 text-xs">{{ post.title }}</h2>
+    <h1 class="text-5xl serif pb-4">{{ post.category.title }}</h1>
 
     {% if post.video %}
       <video class="w-full aspect-[16/10]" controls>
@@ -13,16 +13,11 @@
         Your browser does not support the video tag.
       </video>
     {% endif %}
-  </main>
-</div>
 
-<div class="flex px-4 py-12">
-  <div class="hidden md:inline md:w-72 lg:w-96 flex-none flex-none"></div>
-  <main class="w-full max-w-xl post-body">
     {{ post.body }}
 
     <div class="pt-8">  
-      <a href="#" data-complete-text="Mark as Complete" data-incomplete-text="✓ Completed" data-post-completion-toggle="{{ post.completed? }}" data-token="{{ post.completion_token }}" class="w-full text-center inline-block bg-black text-white border border-black border-solid sans-serif text-2xl uppercase rounded mt-4 px-2 py-1" kjb-settings-id="{{ complete }}">
+      <a href="#" data-complete-text="Mark as Complete" data-incomplete-text="✓ Completed" data-post-completion-toggle="{{ post.completed? }}" data-token="{{ post.completion_token }}" class="w-full text-center inline-block bg-black text-white border border-white border-solid sans-serif text-2xl uppercase rounded mt-4 px-2 py-1" kjb-settings-id="{{ complete }}">
         {% if post.completed? %}
           ✓ Completed
         {% else %}
@@ -35,4 +30,8 @@
       {% endif %}
     </div>
   </main>
+</div>
+
+<div class="flex px-4 py-12">
+  <div class="hidden md:inline md:w-72 lg:w-96 flex-none flex-none"></div>
 </div>

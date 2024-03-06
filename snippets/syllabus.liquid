@@ -1,38 +1,50 @@
 <div class="flex pb-4">
-  <img class="rounded w-12" src="https://www.gravatar.com/avatar/ba71afead85ac20f45acc139375adc9a?s=64&d=https://s3.amazonaws.com/kajabi-storefronts-production/static_assets/default_avatar.jpg" />
+  <img class="rounded w-12" src="https://www.gravatar.com/avatar/ba71afead85ac20f45acc139375adc9a?s=64&d=https://s3.amazonaws.com/kajabi-storefronts-production/static_assets/default_avatar.jpg"/>
   <div class="pl-4">
     <p class="text-white uppercase text-xs">Instructor</p>
     <p class="text-white uppercase text-sm">Alexa Bonomo</p>
   </div>
 </div>
 
-<ol class="list-decimal list-inside text-white sans-serif text-xl md:pr-4">
-  <li class="pb-2 block"><a href="{{ current_product.url }}">Syllabus</a></li>
-  
+<ol class="list-decimal list-inside text-white sans-serif text-xl md:pr-8">
+  <li class="pb-2 block">
+    <a href="{{ current_product.url }}">Syllabus</a>
+  </li>
+
   {% for category in current_product.outline.categories %}
     {% if category.pending_drip? %}
-      <li>
-        <span class="mb-2">{{ category.title }} (coming soon)</span>
+      <li class="truncate">
+        <span class="mb-2">{{ category.title }}
+          (coming soon)</span>
       </li>
     {% else %}
-      <li>
-        <span class="mb-2"><a href="{{ category.posts.first.url }}">{{ category.title }}</a></span>
+      <li class="truncate">
+        <span>
+          <a href="{{ category.posts.first.url }}">{{ category.title }}
+          </a>
+        </span>
         {% if canonical_url contains category.url %}
           <ul>
             {% for post in category.posts %}
               {% if canonical_url contains post.url %}
-                <li class="uppercase text-sm border border-solid rounded inline-block px-2 py-1 mb-2">
+                {% assign classlist = 'truncate uppercase text-sm border border-solid rounded inline-block px-2 pt-1 pb-0.5 mt-1.5' %}
+                {% if forloop.index == 1 %}
+                  {% assign classlist = classlist | append: ' mt-2' %}
+                {% endif %}
+                <li class="{{ classlist }}">
                   {% if post.completed? %}
-                    ✓ {{ post.title }}
+                    ✓
+                    {{ post.title }}
                   {% else %}
                     {{ post.title }}
                   {% endif %}
                 </li>
               {% else %}
-                <li>
-                  <a href="{{ post.url }}" class="uppercase text-sm p-1 block mb-1">
+                <li class="truncate">
+                  <a href="{{ post.url }}" class="uppercase text-sm p-1 block">
                     {% if post.completed? %}
-                      ✓ {{ post.title }}
+                      ✓
+                      {{ post.title }}
                     {% else %}
                       {{ post.title }}
                     {% endif %}
