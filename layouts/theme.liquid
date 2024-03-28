@@ -1,23 +1,31 @@
+{% assign title = "Index • " | append: current_product.title %}
+{% assign description = current_product.description %}
+
 <!doctype html>
-<html lang="en" class="h-full bg-white">
+<html lang="en">
   <head>
     {% csrf_meta_tags %}
-    <title>
-      {% if page_title %}
-        {{ page_title }}
-      {% else %}
-        {{ current_site.title }}
-      {% endif %}
+
+    <title>{{ title }}
     </title>
+
     <meta charset="utf-8"/>
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    {% if page_description %}
-      <meta name="description" content="{{ page_description | escape }}"/>
-    {% endif %}
-    {% include "social_meta_tags" %}
-    <link href="{{ settings.favicon }}?v=2" rel="shortcut icon"/>
+    <link href="{{ 'shortcut.png' | asset_url }}?v=2" rel="shortcut icon"/>
     <link rel="canonical" href="{{ canonical_url }}"/>
+
+    {% include "social_meta_tags" %}
+    <meta name="description" content="{{ description }}">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="{{ title }}">
+    <meta property="og:description" content="{{ description }}">
+    <meta property="og:image" content="{{ current_product.thumbnail_url }}">
+    <meta property="og:locale" content="en_US">
+    <meta name="twitter:title" content="{{ title }}">
+    <meta name="twitter:description" content="{{ description }}">
+    <meta name="twitter:image" content="{{ current_product.thumbnail_url }}">
+    <meta name="twitter:card" content="summary_large_image">
 
     {{ 'reset.css' | asset_url | stylesheet_tag }}
     <link rel='stylesheet' type='text/css' href='https://fonts.sanctuary.computer/ITCGaramond/styles.css'>
@@ -55,14 +63,17 @@
     <header class="bg-black px-4 py-12 border-b border-solid border-b-white">
       <p class="text-white text-5xl md:text-7xl serif pb-1">{{ current_product.title }}
       </p>
-      <p class="text-white sans-serif pb-4 max-w-xl">{{ current_product.description }}
+      <p class="text-white sans-serif pb-4 max-w-xl text-xl">{{ current_product.description }}
       </p>
 
       {% include "resume_button" %}
+
+      <a href="https://discord.com/invite/d9mJAy2AW9" target="_blank" class="ml-2 text-center inline-block bg-black text-white border border-white border-solid sans-serif text-2xl uppercase rounded mt-4 px-2 py-1">
+        Join Discord
+      </a>
     </header>
 
     {{ content_for_layout }}
-
     {{ 'core.js' | kajabi_asset_url | script_tag }}
   </body>
 </html>

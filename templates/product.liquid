@@ -3,9 +3,10 @@
     {% include "syllabus" %}
   </div>
 
-  <main class="w-full">
-    <h1 class="text-white text-5xl serif pb-1">Welcome!</h1>
-    <p class="text-white sans-serif pb-4 max-w-xl">This is the online learning platform that you'll use to work through your course.</p>
+  <main class="w-full max-w-xl">
+    <h1 class="text-white text-5xl md:text-7xl serif pb-1">Welcome!</h1>
+    <p class="text-white sans-serif pb-4 text-xl">This is the online learning platform that you'll use to work through your course.</p>
     {% include "resume_button" %}
+    <img class="pt-4" src="{{ 'sharecard.png' | asset_url }}"/>
   </main>
 </div>
