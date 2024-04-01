@@ -8,13 +8,13 @@
     <h1 class="text-white text-5xl md:text-7xl serif pb-4">{{ post.title }}</h1>
 
     {% if post.video %}
-      <video class="w-full aspect-[16/10]" controls>
+      <video class="w-full aspect-[16/10]" controls poster="{{ post.poster_image_url }}">
         <source src="{{ post.video.url }}" type="video/mp4">
         Your browser does not support the video tag.
       </video>
     {% endif %}
 
-    <section class="max-w-xl">
+    <section class="max-w-xl post-body">
       {{ post.body }}
 
       <div class="pt-8">  
