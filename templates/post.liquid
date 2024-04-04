@@ -18,7 +18,7 @@
       {{ post.body }}
 
       <div class="pt-8">  
-        <a href="#" data-complete-text="Mark as Complete" data-incomplete-text="✓ Completed" data-post-completion-toggle="{{ post.completed? }}" data-token="{{ post.completion_token }}" class="w-full text-center inline-block bg-black text-white border border-white border-solid sans-serif text-2xl uppercase rounded mt-4 px-2 py-1" kjb-settings-id="{{ complete }}">
+        <a id="completion-toggle" href="#" data-complete-text="Mark as Complete" data-incomplete-text="✓ Completed" data-post-completion-toggle="{{ post.completed? }}" data-token="{{ post.completion_token }}" class="w-full text-center inline-block bg-black text-white border border-white border-solid sans-serif text-2xl uppercase rounded mt-4 px-2 py-1" kjb-settings-id="{{ complete }}">
           {% if post.completed? %}
             ✓ Completed
           {% else %}
@@ -26,9 +26,30 @@
           {% endif %}
         </a>
 
+        {% if post.url == current_product.completion.next_post.url or current_product.completion.next_post.url == null %}
+          <script>
+            var targetNode = document.getElementById("completion-toggle");
+            var observer = new MutationObserver(function callback(mutationList, observer) {
+              for (var mutation of mutationList) {
+                if (mutation.type === "attributes" && mutation.attributeName === "data-post-completion-toggle") {
+                  console.log("DID COMPLETE COURSE");
+                  window.scrollTo(0, 0);
+                  window.location.reload();
+                }
+              }
+            });
+            observer.observe(targetNode, { attributes: true, childList: true, subtree: true });
+          </script>
+        {% endif %}
+
         {% if post.next.url %}
           <a href="{{ post.next.url }}" class="w-full text-center inline-block bg-white text-black border border-black border-solid sans-serif text-2xl uppercase rounded mt-4 px-2 py-1">Go to Next Module →</a>
+        {% elsif current_product.completion.next_post.url %}
+          {% if current_product.completion.next_post.url != post.url %}
+            <a href="{{ current_product.completion.next_post.url }}" class="w-full text-center inline-block bg-white text-black border border-black border-solid sans-serif text-2xl uppercase rounded mt-4 px-2 py-1">Back to Incomplete Module →</a>
+          {% endif %}
         {% endif %}
+
       </div>
     </section>
   </main>

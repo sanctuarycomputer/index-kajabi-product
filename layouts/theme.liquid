@@ -55,7 +55,7 @@
     {% content_for_header %}
   </head>
 
-  <body class="h-full bg-black text-white">
+  <body class="h-full bg-black text-white pb-8">
     {% section "header" %}
 
     <header class="bg-black px-4 py-12 border-b border-solid border-b-white">
@@ -70,6 +70,51 @@
         Join Discord
       </a>
     </header>
+    <div class="sticky z-10 top-0 bg-black w-full border-b border-white border-solid px-4 py-2 flex justify-between">
+      <p class="sans-serif text-white uppercase text-sm">Progress:
+        {{ current_product.completion.percent }}
+        %</p>
+
+      {% assign btnAction = current_product.completion.next_post.url %}
+      {% if current_product.completion.percent == 0 %}
+        {% assign btnText = "Begin"  %}
+      {% elsif current_product.completion.percent == 100 %}
+        {% assign btnText  = "Start Over"  %}
+        {% assign btnAction = current_product.categories.first.posts.first.url %}
+      {% else %}
+        {% assign btnText = "Resume" %}
+      {% endif %}
+      <a href="{{ btnAction }}" class="sans-serif text-white uppercase text-sm">{{ btnText }}
+        →</a>
+    </div>
+
+    {% if current_product.completion.percent == 100 %}
+      <script src="https://cdn.jsdelivr.net/npm/confetti-js@0.0.18/dist/index.min.js"></script>
+      <div class="w-100 relative m-4 p-8 bg-white text-center flex justify-center items-center" style="border-radius: 0.75rem;">
+        <div class="max-w-xl">
+          <h1 class="text-black text-5xl md:text-7xl serif pb-4">Congratulations!</h1>
+          <p class="text-black sans-serif text-xl pb-4">
+            You've just completed
+            {{ current_product.title }}
+            !
+          </p>
+
+          <p class="text-black sans-serif text-xl">
+            Your course materials will always be available here for future reference, if you'd like to refresh your learnings.
+                                    Your completion certificate has been emailed to your registered email address.
+          </p>
+        </div>
+        <canvas id="my-canvas" class="absolute w-full h-full top-0"></canvas>
+      </div>
+      <script>
+        var confettiSettings = {
+          target: 'my-canvas',
+          colors: ['black']
+        };
+        var confetti = new ConfettiGenerator(confettiSettings);
+        confetti.render();
+      </script>
+    {% endif %}
 
     {{ content_for_layout }}
     {{ 'core.js' | kajabi_asset_url | script_tag }}
