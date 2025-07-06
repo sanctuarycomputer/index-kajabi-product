@@ -24,5 +24,47 @@
         "info": "Must be a 32x32 PNG file. Transparency is supported. Please allow some time for favicon to change."
       }
     ]
+  },
+  {
+    "name": "Instructor",
+    "elements": [
+      {
+        "type": "header",
+        "content": "Instructor"
+      },
+      {
+        "type": "text",
+        "id": "instructor_name",
+        "label": "Instructor Name",
+        "info": "Enter the name of the instructor."
+      },
+      {
+        "type": "image_picker",
+        "id": "instructor_image",
+        "label": "Instructor Image",
+        "fit": "crop",
+        "width": 200,
+        "height": 200,
+        "info": "Must be a 200x200 JPG file."
+      }
+    ]
+  },
+  {
+    "name": "Misc",
+    "elements": [
+      {
+        "type": "header",
+        "content": "Misc"
+      },
+      {
+        "type": "image_picker",
+        "id": "share_card_image",
+        "label": "Share Card Image",
+        "fit": "crop",
+        "width": 1200,
+        "height": 627,
+        "info": "Must be a 1200x627 JPG file."
+      }
+    ]
   }
 ]

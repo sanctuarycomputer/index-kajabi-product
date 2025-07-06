@@ -1,8 +1,17 @@
 <div class="flex pb-8">
-  <img class="rounded w-12" src="{{ 'alexa.jpg' | asset_url }}"/>
+  {% if settings.instructor_image %}
+    <img class="rounded w-12" src="{{ settings.instructor_image | image_picker_url: 'instructor_image' }}"/>
+  {% else %}
+    <img class="rounded w-12" src="{{ 'alexa.jpg' | asset_url }}"/>
+  {% endif %}
+
   <div class="pl-4">
     <p class="sans-serif text-white uppercase text-sm">Instructor</p>
-    <p class="sans-serif text-white uppercase text-xl">Alexa Bonomo</p>
+    {% if settings.instructor_name %}
+      <p class="sans-serif text-white uppercase text-xl">{{ settings.instructor_name }}</p>
+    {% else %}
+      <p class="sans-serif text-white uppercase text-xl">Alexa Bonomo</p>
+    {% endif %}
   </div>
 </div>
 

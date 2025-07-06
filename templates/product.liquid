@@ -7,6 +7,10 @@
     <h1 class="text-white text-5xl md:text-7xl serif pb-1">Welcome!</h1>
     <p class="text-white sans-serif pb-4 text-xl">This is the online learning platform that you'll use to work through your course.</p>
     {% include "resume_button" %}
-    <img class="pt-4" src="{{ 'sharecard.png' | asset_url }}"/>
+    {% if settings.share_card_image %}
+      <img class="pt-4" src="{{ settings.share_card_image | image_picker_url: 'share_card_image' }}"/>
+    {% else %}
+      <img class="pt-4" src="{{ 'sharecard.png' | asset_url }}"/>
+    {% endif %}
   </main>
 </div>
